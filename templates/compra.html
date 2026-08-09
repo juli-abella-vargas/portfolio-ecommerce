@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vou_inventar - COMPRAR E VENDER - {{titulo}}</title>
+</head>
+
+<body>
+    <h4>{{titulo}}</h4>
+
+    <p>Você está prestes a comprar este produto.</p>
+    <form action="/anuncios/finalizar_compra" method="post">
+        <p><input type="hidden" name="anuncio_id" value="1"></p>
+
+        <p><input type="submit" value="Confirmar Compra Agora"></p>
+    </form>
+    
+    <br>
+    <a href="/">&larr; Voltar</a>
+</body>
+
+</html>

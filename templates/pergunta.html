@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vou_inventar - COMPRAR E VENDER - {{titulo}}</title>
+</head>
+
+<body>
+    <h4> {{titulo}}</h4>
+  
+
+   <h4>Dúvidas e Perguntas sobre os Produtos</h4>
+   
+   <form action="/anuncios/enviar_pergunta" method="post">
+        <p><a href="/">Início</a></p>
+        <p><label for="texto_pergunta">Faça sua pergunta ao vendedor:</label></p>
+        <p><textarea id="texto_pergunta" name="texto_pergunta" rows="3" required></textarea></p>
+        <p><input type="submit" value="Enviar Pergunta"></p>
+    </form>
+
+    <br>
+    <p><a href="/">&larr; Voltar para o Início</a></p>
+
+</body>
+
+</html>
