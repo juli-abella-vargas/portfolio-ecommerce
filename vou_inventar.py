@@ -3,12 +3,23 @@ from flask_sqlalchemy import SQLAlchemy
 from markupsafe import escape
 from flask import render_template
 from flask import request
+from flask import redirect
+from flask import url_for
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///teste.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:@localhost/vou_inventar'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+
+class Usuario(db.Model):
+    id = db.Column("usu_id", db.Integer, primary_key=True)
+    nome = db.Column("usu_nome", db.String(256))
+    email = db.Column("usu_email", db.String(256))
+    senha = db.Column("usu_senha", db.String(256))
+
+   
 
 @app.route("/")
 def index():
@@ -20,7 +31,14 @@ def usuario():
 
 @app.route("/cad/caduser", methods=["POST"])
 def caduser():
-    return request.form
+    usuario = Usuario(
+        nome = request.form.get("user"), 
+        email = request.form.get("email"), 
+        senha = request.form.get("senha")
+        )
+    db.session.add(usuario)
+    db.session.commit()
+    return redirect(url_for("usuario"))
 
 @app.route("/cad/anuncio")
 def anuncio():
@@ -65,8 +83,10 @@ def relVendas():
 def relCompras():
     return render_template("relCompras.html")
 
-    
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
-    
+    with app.app_context():
+        db.create_all() 
+    app.run(debug=True)  
+
