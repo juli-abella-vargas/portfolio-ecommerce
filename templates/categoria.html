@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vou_inventar - COMPRAR E VENDER - Cadrastro de {{titulo}}</title>
+</head>
+
+<body>
+    <h4>Cadastro de {{titulo}}</h4>
+   <form action="/categoria/novo" method="post" autocomplete="off">
+        <p><a href="/">Início</a></p>
+
+        <p><label for="nome">Nome da Categoria</label></p>
+        <p><input type="text" id="nome" name="nome" required></p>
+
+        <p><label for="desc">Descrição</label></p>
+        <p><input type="text" id="desc" name="desc" required></p>
+
+        <p><input type="submit" value="Cadastrar"></p>
+    </form>
+
+    <br>
+    <h4>Lista de Categorias</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Editar</th>
+                <th>Deletar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in categorias %}
+            <tr>
+                <td>{{ item.nome }}</td>
+                <td>{{ item.desc }}</td>
+                <td><a href="/categoria/editar/{{ item.id }}">Editar</a></td>
+                <td><a href="/categoria/deletar/{{ item.id }}">Deletar X</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <a href="/">&larr; Voltar para o Início</a>
+
+</body>
+</html>

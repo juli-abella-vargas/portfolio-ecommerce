@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vou_inventar - Relatório de vendas {{ titulo }}</title>
+</head>
+<body>
+    <h2>Relatório de Vendas</h2>
+    
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID da Venda</th>
+                <th>Anúncio ID</th>
+                <th>Quantidade vendida</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for v in vendas %}
+            <tr>
+                <td>#{{ v.id }}</td>
+                <td>{{ v.anuncio_id }}</td>
+                <td>{{ v.quantidade }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">Nenhuma venda registrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <p><a href="/">&larr; Voltar ao Início</a></p>
+</body>
+</html>

@@ -8,14 +8,29 @@
     <h4>{{titulo}}</h4>
 
     <p>Você está prestes a comprar este produto.</p>
-    <form action="/anuncios/finalizar_compra" method="post">
-        <p><input type="hidden" name="anuncio_id" value="1"></p>
+
+    <form action="/compras/finalizar_compra" method="post">
+        
+        <input type="hidden" name="anuncio_id" value="1">
+        <input type="hidden" name="comprador_id" value="1">
+
+        <p>
+            <label for="quantidade">Quantidade:</label><br>
+            <input type="number" id="quantidade" name="quantidade" value="1" min="1" required>
+        </p>
+
+        <p>
+            <label for="valor_total">Valor Total (R$):</label><br>
+            <input type="number" id="valor_total" step="0.01" name="valor_total" placeholder="0.00" required>
+        </p>
 
         <p><input type="submit" value="Confirmar Compra Agora"></p>
     </form>
-    
-    <br>
-    <a href="/">&larr; Voltar</a>
-</body>
 
+    <br>
+    <!-- Links de navegação organizados -->
+    <p><a href="/compras/relatorio">Ver Relatório de Compras &rarr;</a></p>
+    <p><a href="/">&larr; Voltar para o Início</a></p>
+
+</body>
 </html>

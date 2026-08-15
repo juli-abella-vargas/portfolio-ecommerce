@@ -1,24 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>vou_inventar - COMPRAR E VENDER - {{titulo}}</title>
+    <title>vou_inventar - COMPRAR E VENDER - Cadrastro de {{titulo}}</title>
 </head>
 
 <body>
-    <h4> {{titulo}}</h4>
-   <form action="caduser" method="post">
+    <h4>Cadastro de {{titulo}}</h4>
+   <form action="/usuario/criar" method="post">
         <p><a href="/">Início</a></p>
+        
         <p><label for="user">Username</label></p>
         <p><input type="text" id="user" name="user"></p>
 
         <p><label for="email">E-mail</label></p>
         <p><input type="text" id="email" name="email"></p>
 
-        <p><label for="passwod">Password</label></p>
-        <p><input type="text" id="passwod" name="passwod"></p>
+        <p><label for="password">Password</label></p>
+        <p><input type="password" id="password" name="password"></p>
 
         <p><input type="submit" value="Cadastrar"></p>
    </form>
+
+   <h4>Lista de {{titulo}}</h4>
+   <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Senha</th>
+                <th>Editar</th>
+                <th>Deletar</th>
+                
+
+            </tr>
+
+        </thead>
+       
+        <tbody>
+                {%for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.nome }}</td>
+                        <td>{{ usuario.email }}</td>
+                        <td>{{ usuario.senha }}</td>
+                        <td><a href="/usuario/editar/{{ usuario.id }}">Editar</a></td>
+                        <td><a href="/usuario/deletar/{{ usuario.id }}">Deletar X</a></td>
+                    </tr>
+                {% endfor %}
+
+        </tbody>
+   </table>
+    
 </body>
 
 </html>

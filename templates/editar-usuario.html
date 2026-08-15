@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vou_inventar - COMPRAR E VENDER - Editar {{titulo}}</title>
+</head>
+
+<body>
+    <h4>Editar {{titulo}}</h4>
+   <form action="/usuario/atualizar/{{ usuario.id }}" method="post">
+        <p><label for="user">Nome:</label></p>
+        <p><input type="text" id="user" name="user" value="{{ usuario.nome }}" required></p>
+
+        <p><label for="email">E-mail:</label></p>
+        <p><input type="email" id="email" name="email" value="{{ usuario.email }}" required></p>
+
+        <p><label for="password">Senha:</label></p>
+        <p><input type="password" id="password" name="password" value="{{ usuario.senha }}" required></p>
+
+        <p>
+            <input type="submit" value="Salvar Alterações">
+            <a href="/cad/usuario">Cancelar</a>
+        </p>
+    </form>
+
+</body>
+</html>

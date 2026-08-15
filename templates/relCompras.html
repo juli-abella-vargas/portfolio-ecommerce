@@ -8,24 +8,34 @@
     <h2>Relatório de Compras</h2>
     <p>Aqui serão exibidos os produtos que você adquiriu na plataforma.</p>
 
-    <!-- Exemplo de estrutura em tabela para listagem futura -->
-    <table border="1" cellpadding="5">
-        <tr>
-            <th>ID da Compra</th>
-            <th>Produto</th>
-            <th>Data</th>
-            <th>Valor</th>
-        </tr>
-        <!-- Futuramente aqui entra o loop for do Jinja2 para puxar do banco de dados -->
-        <tr>
-            <td>1</td>
-            <td>Exemplo de Produto Adquirido</td>
-            <td>--/--/----</td>
-            <td>R$ 0,00</td>
-        </tr>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID da Compra</th>
+                <th>Quantidade</th>
+                <th>Valor Total</th>
+                <th>Anúncio ID</th>
+                <th>Comprador ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in compras %}
+            <tr>
+                <td>#{{ c.id }}</td>
+                <td>{{ c.quantidade }}</td>
+                <td>R$ {{ "%.2f"|format(c.valor_total) }}</td>
+                <td>{{ c.anuncio_id if c.anuncio_id else '-' }}</td>
+                <td>{{ c.comprador_id if c.comprador_id else '-' }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="5">Nenhuma compra realizada ainda.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
+    
+    <p><a href="/">&larr; Voltar ao Início</a></p>
 
-    <br>
-    <p><a href="/">&larr; Voltar para o Início</a></p>
 </body>
 </html>

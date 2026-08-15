@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vou_inventar - Cadastro de {{titulo}}</title>
+</head>
+<body>
+
+    <h4>Cadastro de {{titulo}}</h4>
+
+    <form action="/favorito/salvar" method="post">
+        <p><a href="/">Início</a></p>
+
+        <p><label for="usuario_id">Usuário ID</label></p>
+        <p><input type="number" id="usuario_id" name="usuario_id" placeholder="Ex: 1"></p>
+
+        <p><label for="anuncio_id">Anúncio ID</label></p>
+        <p><input type="number" id="anuncio_id" name="anuncio_id" required></p>
+
+        <p><input type="submit" value="Salvar Favorito"></p>
+    </form>
+
+    <br>
+
+    <h4>Lista de {{titulo}}</h4>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Usuário ID</th>
+                <th>Anúncio ID</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in favoritos %}
+            <tr>
+                <td>#{{ f.id }}</td>
+                <td>{{ f.usuario_id }}</td>
+                <td>{{ f.anuncio_id }}</td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="3">Nenhum favorito cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+    <a href="/">&larr; Voltar para o Início</a>
+
+</body>
+</html>
