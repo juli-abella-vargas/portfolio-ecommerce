@@ -2,22 +2,30 @@
 <html>
 <head>
     <title>vou_inventar - COMPRAR E VENDER</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
 </head>
 <body>
-    
-   <h4> BEM VINDOS AO vou_inventar</h4>
-    <nav>
-        <p><a href="/">Início</a></p>
-        <p><a href={{ url_for("usuario")}}>Cadastro Usuario</a></p>
-        <p><a href={{ url_for("anuncio") }}>Novo Anúncio (Cadastro Anúncio)</a></p>
-        <p><a href={{ url_for('compra') }}>Comprar Produto / Vitrine</a></p>
-        <p><a href={{ url_for("pergunta")}}> Perguntas</a></p>
-        <p><a href={{ url_for("categoria")}}>Categorias (Cadastro de Produtos)</a></p>
-        <p><a href={{ url_for("relCompras")}}>Minhas Compras</a></p>
-        <p><a href={{ url_for("relVendas")}}>Minhas Vendas</a></p>
-        <p><a href={{ url_for("favoritos")}}>Favoritos</a></p>
-        
-   </nav>
-    
+
+    <div class="container">
+        <div class="page-header">
+            <h4>BEM VINDOS AO vou_inventar</h4>
+        </div>
+
+        <nav>
+            <div class="list-group">
+                <a href="{{ url_for('index') }}" class="list-group-item active">Início</a>
+                <a href="{{ url_for('usuario') }}" class="list-group-item">Cadastro Usuário</a>
+                <a href="{{ url_for('anuncio') }}" class="list-group-item">Novo Anúncio (Cadastro Anúncio)</a>
+                <a href="{{ url_for('compra') }}" class="list-group-item">Comprar Produto / Vitrine</a>
+                <a href="{{ url_for('pergunta') }}" class="list-group-item">Perguntas</a>
+                <a href="{{ url_for('categoria') }}" class="list-group-item">Categorias (Cadastro de Produtos)</a>
+                <a href="{{ url_for('relCompras') }}" class="list-group-item">Minhas Compras</a>
+                <a href="{{ url_for('relVendas') }}" class="list-group-item">Minhas Vendas</a>
+                <a href="{{ url_for('favoritos') }}" class="list-group-item">Favoritos</a>
+                <a href="{{ url_for('logout') }}" class="list-group-item list-group-item-danger">Logout</a>
+            </div>
+        </nav>
+    </div>
+
 </body>
 </html>

@@ -2,40 +2,46 @@
 <html>
 <head>
     <title>vou_inventar - Relatório de Compras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
 </head>
+
 <body>
-    
-    <h2>Relatório de Compras</h2>
-    <p>Aqui serão exibidos os produtos que você adquiriu na plataforma.</p>
+    <div class="container">
+        <div class="page-header">
+            <h4>Relatório de Compras</h4>
+        </div>
+        
+        <p>Aqui serão exibidos os produtos que você adquiriu na plataforma.</p>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID da Compra</th>
-                <th>Quantidade</th>
-                <th>Valor Total</th>
-                <th>Anúncio ID</th>
-                <th>Comprador ID</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for c in compras %}
-            <tr>
-                <td>#{{ c.id }}</td>
-                <td>{{ c.quantidade }}</td>
-                <td>R$ {{ "%.2f"|format(c.valor_total) }}</td>
-                <td>{{ c.anuncio_id if c.anuncio_id else '-' }}</td>
-                <td>{{ c.comprador_id if c.comprador_id else '-' }}</td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="5">Nenhuma compra realizada ainda.</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    
-    <p><a href="/">&larr; Voltar ao Início</a></p>
+        <table class="table table-striped table-responsive table-bordered">
+            <thead class="thead-default">
+                <tr>
+                    <th>ID da Compra</th>
+                    <th>Quantidade</th>
+                    <th>Valor Total</th>
+                    <th>Anúncio ID</th>
+                    <th>Comprador ID</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in compras %}
+                <tr>
+                    <td>#{{ c.id }}</td>
+                    <td>{{ c.quantidade }}</td>
+                    <td>R$ {{ "%.2f"|format(c.valor_total) }}</td>
+                    <td>{{ c.anuncio_id if c.anuncio_id else '-' }}</td>
+                    <td>{{ c.comprador_id if c.comprador_id else '-' }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5">Nenhuma compra realizada ainda.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
+        <br>
+        <p><a href="{{ url_for('index') }}">&larr; Voltar ao Início</a></p>
+    </div>
 </body>
 </html>

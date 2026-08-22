@@ -1,36 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>vou_inventar - COMPRAR E VENDER - {{titulo}}</title>
+    <title>vou_inventar - COMPRAR E VENDER - COMPRAR</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
 </head>
 
 <body>
-    <h4>{{titulo}}</h4>
+    <div class="container">
+        <div class="page-header">
+            <h4>COMPRAR</h4>
+        </div>
 
-    <p>Você está prestes a comprar este produto.</p>
+        <p>Você está prestes a comprar este produto.</p>
 
-    <form action="/compras/finalizar_compra" method="post">
-        
-        <input type="hidden" name="anuncio_id" value="1">
-        <input type="hidden" name="comprador_id" value="1">
+        {% if anuncio %}
+            <p><strong>Produto:</strong> {{ anuncio.titulo }}</p>
+            <p><strong>Preço Unitário:</strong> R$ {{ "%.2f"|format(anuncio.preco) }}</p>
 
-        <p>
-            <label for="quantidade">Quantidade:</label><br>
-            <input type="number" id="quantidade" name="quantidade" value="1" min="1" required>
-        </p>
+            <form action="{{ url_for('finalizar_compra') }}" method="post">
+                <input type="hidden" name="anuncio_id" value="{{ anuncio.id }}">
 
-        <p>
-            <label for="valor_total">Valor Total (R$):</label><br>
-            <input type="number" id="valor_total" step="0.01" name="valor_total" placeholder="0.00" required>
-        </p>
+                <div class="form-group">
+                    <label for="quantidade">Quantidade:</label>
+                    <input type="number" class="form-control" id="quantidade" name="quantidade" value="1" min="1" max="{{ anuncio.quantidade }}" required>
+                </div>
 
-        <p><input type="submit" value="Confirmar Compra Agora"></p>
-    </form>
+                <button type="submit" class="btn btn-primary">Confirmar Compra Agora</button>
+            </form>
+            <br>
+            <p><a href="{{ url_for('compra') }}">&larr; Voltar para a Vitrine</a></p>
 
-    <br>
-    <!-- Links de navegação organizados -->
-    <p><a href="/compras/relatorio">Ver Relatório de Compras &rarr;</a></p>
-    <p><a href="/">&larr; Voltar para o Início</a></p>
+        {% elif todos_anuncios %}
+            <p>Escolha um produto abaixo para comprar:</p>
+            <div class="list-group">
+                {% for item in todos_anuncios %}
+                    <div class="list-group-item clearfix">
+                        <strong>{{ item.titulo }}</strong> - R$ {{ "%.2f"|format(item.preco) }}
+                        <a href="{{ url_for('compra', anuncio_id=item.id) }}" class="btn btn-primary btn-sm pull-right">Comprar</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Nenhum produto cadastrado para venda no momento.</p>
+        {% endif %}
 
+        <br>
+        <p><a href="{{ url_for('relCompras') }}">Ver Relatório de Compras &rarr;</a></p>
+        <p><a href="{{ url_for('index') }}">&larr; Voltar para o Início</a></p>
+    </div>
 </body>
 </html>

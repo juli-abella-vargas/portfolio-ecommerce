@@ -1,55 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>vou_inventar -  {{titulo}}</title>
+    <title>vou_inventar - {{ titulo }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
 </head>
 
 <body>
-    <h4> {{titulo}}</h4> 
-    <h4>Dúvidas e Perguntas sobre os Produtos</h4>
+    <div class="container">
+        <div class="page-header">
+            <h4>{{ titulo }}</h4>
+            <p class="text-muted">Dúvidas e Perguntas sobre os Produtos</p>
+        </div>
 
-   <form action="/pergunta/enviar_pergunta" method="post">
-        <p><a href="/">Início</a></p>
-        <p><label for="texto_pergunta">Faça sua pergunta ao vendedor:</label></p>
-        <p><textarea id="texto_pergunta" name="texto_pergunta" rows="3" required placeholder="Digite sua dúvida aqui..."></textarea></p>
-        
-        <button type="submit">Enviar Pergunta</button>
+        <form action="{{ url_for('enviar_pergunta') }}" method="post">
+            <p><a href="{{ url_for('index') }}">Início</a></p>
 
-    </form>
+            <div class="form-group">
+                <label for="texto_pergunta">Faça sua pergunta ao vendedor:</label>
+                <textarea class="form-control" id="texto_pergunta" name="texto_pergunta" rows="3" required placeholder="Digite sua dúvida aqui..."></textarea>
+            </div>
 
-    <h3>Perguntas Realizadas</h3>
-
-{% if perguntas %}
-    <ul>
-        {% for item in perguntas %}
-            <li>
-                <strong>Pergunta:</strong> {{ item.texto_pergunta }}
-                <br>
-                <small>
-                    <strong>Resposta:</strong> 
-                    {% if item.texto_resposta %}
-                        
-                        {{ item.texto_resposta }}
-                    {% else %}
-                        
-                        <em>Ainda não respondida.</em>
-                        
-                        <form action="{{ url_for('responder_pergunta', id=item.id) }}" method="post" style="margin-top: 5px;">
-                            <input type="text" name="texto_resposta" placeholder="Digite a resposta..." required>
-                            <button type="submit">Responder</button>
-                        </form>
-                    {% endif %}
-                </small>
-            </li>
-            <br>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>Nenhuma pergunta realizada para este produto ainda.</p>
-{% endif %}
+            <button type="submit" class="btn btn-primary">Enviar Pergunta</button>
+        </form>
+    </div>
 
     <br>
-    <p><a href="/">&larr; Voltar para o Início</a></p>
 
+    <div class="container">
+        <div class="page-header">
+            <h4>Perguntas Realizadas</h4>
+        </div>
+
+        {% if perguntas %}
+            <ul class="list-group">
+                {% for item in perguntas %}
+                    <li class="list-group-item">
+                        <p><strong>Pergunta:</strong> {{ item.texto_pergunta }}</p>
+                        
+                        <div>
+                            <strong>Resposta:</strong> 
+                            {% if item.texto_resposta %}
+                                <span>{{ item.texto_resposta }}</span>
+                            {% else %}
+                                <em class="text-muted">Ainda não respondida.</em>
+                                
+                                <form action="{{ url_for('responder_pergunta', id=item.id) }}" method="post" class="form-inline" style="margin-top: 10px;">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="texto_resposta" placeholder="Digite a resposta..." required>
+                                    </div>
+                                    <button type="submit" class="btn btn-default">Responder</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-muted">Nenhuma pergunta realizada para este produto ainda.</p>
+        {% endif %}
+
+        <br>
+        <p><a href="{{ url_for('index') }}">&larr; Voltar para o Início</a></p>
+    </div>
 </body>
 </html>

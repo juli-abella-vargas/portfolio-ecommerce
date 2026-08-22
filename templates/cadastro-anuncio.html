@@ -1,59 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>vou_inventar - COMPRAR E VENDER - Cadastro de {{titulo}}</title>
+    <title>vou_inventar - COMPRAR E VENDER - Cadastro de {{ titulo }}</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
 </head>
 
-<body>
-    <h4> Cadastrar Novo {{titulo}}</h4>
+<body>   
+    <div class="container">
+        {% if anuncio_detalhe %}
+        <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 20px;">
+            <h4>Detalhes do Anúncio Selecionado</h4>
+            <h2>{{ anuncio_detalhe.titulo }}</h2>
+            <p><strong>Preço:</strong> R$ {{ anuncio_detalhe.preco }}</p>
+            <p><strong>Estoque:</strong> {{ anuncio_detalhe.quantidade }} unidades</p>
+            
+            <form action="{{ url_for('compra') }}" method="get">
+                <input type="hidden" name="anuncio_id" value="{{ anuncio_detalhe.id }}">
+                <input type="submit" class="btn btn-primary" value="Comprar Agora">
+            </form>
+        </div>
+        {% endif %}
 
-   <form action="/anuncio/criar" method="post" autocomplete="off">
-        <p><a href="/">Início</a></p>
+        <div class="page-header">
+            <h4>Cadastrar Novo {{ titulo }}</h4>
+        </div>
 
-        <p><label for="titulo">Título do Anúncio</label></p>
-        <p><input type="text" id="titulo" name="titulo" required></p>
+        <form action="{{ url_for('cadanuncio') }}" method="post" autocomplete="off">
+            <p><a href="{{ url_for('index') }}">Início</a></p>
 
-        <p><label for="descricao">Descrição</label></p>
-        <p><textarea rows="4" cols="50" id="descricao" name="descricao" required></textarea></p>
+            <div class="form-group">
+                <label for="titulo">Título do Anúncio</label>
+                <input type="text" class="form-control" id="titulo" name="titulo" required>
+            </div>
 
-        <p><label for="preco">Preço (R$)</label></p>
-        <p><input type="number" step="0.01" id="preco" name="preco" required></p>
+            <div class="form-group">
+                <label for="preco">Preço (R$)</label>
+                <input type="number" step="0.01" class="form-control" id="preco" name="preco" required>
+            </div>
 
-        <p><label for="estoque">Estoque</label></p>
-        <p><input type="number" id="estoque" name="estoque" required></p>
+            <div class="form-group">
+                <label for="estoque">Estoque</label>
+                <input type="number" class="form-control" id="estoque" name="estoque" required>
+            </div>
 
-        <p><input type="submit" value="Cadastrar"></p>
-    </form>
+            <div class="form-group">
+                <label for="categoria_id">Categoria do Anúncio</label>
+                <select name="categoria_id" id="categoria_id" class="form-control" required>
+                    <option value="" disabled selected>Selecione uma categoria</option>
+                    {% for cat in categorias %}
+                        <option value="{{ cat.id }}">{{ cat.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+    </div>
 
     <br>
-    <h4>Lista de Anúncios</h4>
-    <table>
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Descrição</th>
-                <th>Preço</th>
-                <th>Estoque</th>
-                <th>Editar</th>
-                <th>Deletar</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in anuncios %}
-            <tr>
-                <td>{{ item.titulo }}</td>
-                <td>{{ item.descricao }}</td>
-                <td>R$ {{ item.preco }}</td>
-                <td>{{ item.quantidade }}</td>
-                <td><a href="/anuncio/editar/{{ item.id }}">Editar</a></td>
-                <td><a href="/anuncio/deletar/{{ item.id }}">Deletar X</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 
-    <br>
-    <a href="/">&larr; Voltar para o Início</a>
+    <div class="container">
+        <div class="page-header">
+            <h4>Lista de Anúncios</h4>
+        </div>
+        <table class="table table-striped table-responsive table-bordered">
+            <thead class="thead-default">
+                <tr>
+                    <th>Título</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                    <th>Categoria (ID)</th>
+                    <th>Usuário (ID)</th>
+                    <th>Detalhes</th>
+                    <th>Editar</th>
+                    <th>Deletar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in anuncios %}
+                <tr>
+                    <td>{{ item.titulo }}</td>
+                    <td>R$ {{ item.preco }}</td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>{{ item.categoria_id }}</td>
+                    <td>{{ item.usuario_id }}</td>
+                    <td><a href="{{ url_for('detalhar_anuncio', id=item.id) }}">Ver Detalhes</a></td>
+                    <td><a href="{{ url_for('editar_anuncio', id=item.id) }}">Editar</a></td>
+                    <td><a href="{{ url_for('deletar_anuncio', id=item.id) }}">Deletar X</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
+        <br>
+        <p><a href="{{ url_for('index') }}">&larr; Voltar para o Início</a></p>
+    </div>
 </body>
 </html>

@@ -2,27 +2,29 @@
 <html>
 <head>
     <title>vou_inventar - Editar {{ titulo }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
 </head>
+
 <body>
+    <div class="container">
+        <div class="page-header">
+            <h4>Editar {{ titulo }} #{{ categoria.id }}</h4>
+        </div>
 
-    <h4>Editar {{ titulo }} #{{ categoria.id }}</h4>
+        <form action="{{ url_for('atualizar_categoria', id=categoria.id) }}" method="post">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" class="form-control" id="nome" name="nome" value="{{ categoria.nome }}" required>
+            </div>
 
-    <form action="/categoria/atualizar/{{ categoria.id }}" method="post">
-        <p>
-            <label for="nome">Nome:</label><br>
-            <input type="text" id="nome" name="nome" value="{{ categoria.nome }}" required>
-        </p>
+            <div class="form-group">
+                <label for="desc">Descrição:</label>
+                <input type="text" class="form-control" id="desc" name="desc" value="{{ categoria.desc }}" required>
+            </div>
 
-        <p>
-            <label for="desc">Descrição:</label><br>
-            <input type="text" id="desc" name="desc" value="{{ categoria.desc }}" required>
-        </p>
-
-        <p>
-            <input type="submit" value="Salvar Alterações">
-            <a href="/config/categoria">Cancelar</a>
-        </p>
-    </form>
-
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            <a href="{{ url_for('categoria') }}" class="btn btn-default">Cancelar</a>
+        </form>
+    </div>
 </body>
 </html>

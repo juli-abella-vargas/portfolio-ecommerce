@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>vou_inventar - COMPRAR E VENDER - Editar {{titulo}}</title>
+    <title>vou_inventar - COMPRAR E VENDER - Editar Usuário</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
 </head>
 
 <body>
-    <h4>Editar {{titulo}}</h4>
-   <form action="/usuario/atualizar/{{ usuario.id }}" method="post">
-        <p><label for="user">Nome:</label></p>
-        <p><input type="text" id="user" name="user" value="{{ usuario.nome }}" required></p>
+    <div class="container">
+        <div class="page-header">
+            <h4>Editar {{ titulo }}</h4>
+        </div>
 
-        <p><label for="email">E-mail:</label></p>
-        <p><input type="email" id="email" name="email" value="{{ usuario.email }}" required></p>
+        <form action="{{ url_for('atualizar_usuario', id=usuario.id) }}" method="post">
+            <div class="form-group">
+                <label for="nome">Nome:</label>
+                <input type="text" class="form-control" id="nome" name="nome" value="{{ usuario.nome }}" required>
+            </div>
 
-        <p><label for="password">Senha:</label></p>
-        <p><input type="password" id="password" name="password" value="{{ usuario.senha }}" required></p>
+            <div class="form-group">
+                <label for="email">E-mail:</label>
+                <input type="email" class="form-control" id="email" name="email" value="{{ usuario.email }}" required>
+            </div>
 
-        <p>
-            <input type="submit" value="Salvar Alterações">
-            <a href="/cad/usuario">Cancelar</a>
-        </p>
-    </form>
+            <div class="form-group">
+                <label for="senha">Nova Senha (deixe em branco se não quiser alterar):</label>
+                <input type="password" class="form-control" id="senha" name="senha" value="">
+            </div>
 
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+            <a href="{{ url_for('usuario') }}" class="btn btn-default">Cancelar</a>
+        </form>
+    </div>
 </body>
 </html>
