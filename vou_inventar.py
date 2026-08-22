@@ -11,7 +11,8 @@ from flask_login import(current_user, LoginManager,
 import hashlib
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:@localhost/vou_inventar'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:@localhost/vou_inventar'
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///ecommerce.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
