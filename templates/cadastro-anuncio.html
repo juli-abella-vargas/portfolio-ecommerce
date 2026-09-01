@@ -86,7 +86,7 @@
                     <td>{{ item.usuario_id }}</td>
                     <td><a href="{{ url_for('detalhar_anuncio', id=item.id) }}">Ver Detalhes</a></td>
                     <td><a href="{{ url_for('editar_anuncio', id=item.id) }}">Editar</a></td>
-                    <td><a href="{{ url_for('deletar_anuncio', id=item.id) }}">Deletar X</a></td>
+                    <td><a href="{{ url_for('deletar_anuncio', id=item.id) }}" onclick="return confirm('Tem certeza que deseja deletar este anúncio?');">Deletar X</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

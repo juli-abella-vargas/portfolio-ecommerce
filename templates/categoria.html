@@ -50,7 +50,7 @@
                     <td>{{ item.nome }}</td>
                     <td>{{ item.desc }}</td>
                     <td><a href="{{ url_for('editar_categoria', id=item.id) }}">Editar</a></td>
-                    <td><a href="{{ url_for('deletar_categoria', id=item.id) }}">Deletar X</a></td>
+                    <td><a href="{{ url_for('deletar_categoria', id=item.id) }}" onclick="return confirm('Tem certeza que deseja deletar esta categoria?');">Deletar X</a></td>
                 </tr>
                 {% endfor %}
             </tbody>

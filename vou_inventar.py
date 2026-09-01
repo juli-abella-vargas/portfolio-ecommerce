@@ -123,13 +123,12 @@ def logout():
     return redirect(url_for("index"))
 
 @app.route("/")
-@login_required
 def index():
-   return render_template("index.html")
-
+    if current_user.is_authenticated:
+        return render_template("index.html")
+    return redirect(url_for("usuario"))
 
 @app.route("/cad/usuario")
-@login_required
 def usuario():
     return render_template("cadastro-usuario.html", usuarios = Usuario.query.all(), titulo="Usuário")
 
@@ -145,7 +144,8 @@ def criarusuario():
 
     db.session.add(usuario)
     db.session.commit()
-    return redirect(url_for("usuario"))
+    login_user(usuario)
+    return redirect(url_for("index"))
 
 @app.route("/usuario/detalhar/<int:id>")
 @login_required
@@ -156,21 +156,27 @@ def buscarusuario(id):
 @app.route("/usuario/deletar/<int:id>")
 @login_required
 def deletar_usuario(id):
-    usuario = Usuario.query.get(id)
-    if usuario:
-        db.session.delete(usuario)
-        db.session.commit()
+    if current_user.id == id:
+        usuario = Usuario.query.get(id)
+        if usuario:
+            db.session.delete(usuario)
+            db.session.commit()
+            logout_user()           
     return redirect(url_for("usuario"))
 
 @app.route("/usuario/editar/<int:id>")
 @login_required
 def editarusuario(id):
+    if current_user.id != id:
+        return redirect(url_for("index"))
     usuario_encontrado = Usuario.query.get(id)
     return render_template("editar-usuario.html", usuario=usuario_encontrado, titulo="Usuário")
 
 @app.route("/usuario/atualizar/<int:id>", methods=["POST"])
 @login_required
 def atualizar_usuario(id):
+    if current_user.id != id:
+        return redirect(url_for("index"))
     usuario = Usuario.query.get(id)
     if usuario:
         usuario.nome = request.form.get("nome")
@@ -180,8 +186,8 @@ def atualizar_usuario(id):
             usuario.senha = hashlib.sha512(str(nova_senha).encode("utf-8")).hexdigest()
 
         db.session.commit()     
-    return redirect(url_for("usuario"))
- 
+    return redirect(url_for("index"))
+
 #PERGUNTA
 @app.route("/anuncios/pergunta")
 def pergunta():

@@ -11,10 +11,13 @@
             <h4>Cadastro de {{titulo}}</h4>
         </div>
         <form action="/usuario/criar" method="post">
-            <p><a href="/">Início</a></p>
+            <p>
+                <a href="/login">Já tem conta? Faça Login</a> | 
+                <a href="/">Início</a>
+            </p>
 
             <div class="form-group">
-                <label for="nome">Nome</label></p>
+                <label for="nome">Nome</label>
                 <input type="text" class="form-control" id="nome" name="nome" required>
             </div>
 
@@ -32,6 +35,7 @@
         </form>
     </div>
 
+    {% if current_user.is_authenticated %}
     <div class="container">
         <div class="page-header">
             <h4>Lista de {{titulo}}</h4>
@@ -53,12 +57,13 @@
                     <td>{{ usuario.email }}</td>
                     <td>{{ usuario.senha }}</td>
                     <td><a href="/usuario/editar/{{ usuario.id }}">Editar</a></td>
-                    <td><a href="/usuario/deletar/{{ usuario.id }}">Deletar</a></td>
+                    <td><a href="/usuario/deletar/{{ usuario.id }}" onclick="return confirm('Tem certeza que deseja deletar este usuário?');">Deletar</a></td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+    {% endif %}
 </body>
 
 </html>
