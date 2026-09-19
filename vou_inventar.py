@@ -303,7 +303,7 @@ def cadanuncio():
 
 @app.route("/anuncio/detalhar/<int:id>")
 def detalhar_anuncio(id):
-    anuncio_encontrado = Anuncio.query.get_or_404(id)
+    anuncio_encontrado = Anuncio.query.get(id)
     return render_template(
         "cadastro-anuncio.html", 
         categorias=Categoria.query.all(), 
@@ -316,13 +316,15 @@ def detalhar_anuncio(id):
 @login_required
 def editar_anuncio(id):
     anuncio_encontrado = Anuncio.query.get(id)
+    if not anuncio_encontrado or anuncio_encontrado.usuario_id != current_user.id:
+        return redirect(url_for("anuncio"))
     return render_template("editar-anuncio.html", anuncio=anuncio_encontrado, categorias=Categoria.query.all(), titulo="Anúncio")
 
 @app.route("/anuncio/atualizar/<int:id>", methods=["POST"])
 @login_required
 def atualizar_anuncio(id):
     anuncio_encontrado = Anuncio.query.get(id)
-    if anuncio_encontrado:
+    if anuncio_encontrado and anuncio_encontrado.usuario_id == current_user.id:
         anuncio_encontrado.titulo = request.form.get("titulo")
         anuncio_encontrado.preco = float(request.form.get("preco"))
         anuncio_encontrado.quantidade = int(request.form.get("estoque") or 1)
@@ -336,7 +338,7 @@ def atualizar_anuncio(id):
 @login_required
 def deletar_anuncio(id):
     anuncio_encontrado = Anuncio.query.get(id)
-    if anuncio_encontrado:
+    if anuncio_encontrado and anuncio_encontrado.usuario_id == current_user.id:
         db.session.delete(anuncio_encontrado)
         db.session.commit()
     return redirect(url_for("anuncio"))
